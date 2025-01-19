@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  address  String
+  email    String   @unique
+  password String
+  role     String   @default("user")
+  createAt DateTime @default(now())
+  token    String?
+  isActive Boolean  @default(true)
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Admin {
+  id          Int           @id @default(autoincrement())
+  name        String
+  email       String        @unique
+  password    String
+  address     String
+  role        String?
+  token       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  isActive    Boolean       @default(true)
+  Logs        Logs[]
+  Audit_Trils Audit_Trils[]
+}
+
+model System_Setting {
+  id          Int      @id @default(autoincrement())
+  key         String
+  value       String
+  description String
+  update_at   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+}
+
+model Login_Attempt {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  attempt       Int       @default(0)
+  blocked_until DateTime?
+  last_attempt  DateTime  @default(now())
+}
+
+model Logs {
+  id          Int      @id @default(autoincrement())
+  adminId     Int
+  role        String
+  action      String
+  entity_type String
+  entity_id   Int
+  timestamp   DateTime @default(now())
+  ip_address  String
+  admin       Admin    @relation(fields: [adminId], references: [id])
+}
+
+model Audit_Trils {
+  id            Int      @id @default(autoincrement())
+  entity_type   String
+  entity_id     Int
+  field_changed String
+  old_Value     String
+  new_Value     String
+  changed_by    Int
+  role          String
+  timestamp     DateTime @default(now())
+  admin         Admin    @relation(fields: [changed_by], references: [id])
+  isActive      Boolean  @default(true)
+}
+
+model Content {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  category_id Int
+  file_url    String?
+  created_by  Int
+  updated_by  Int?
+  created_at  DateTime @default(now())
+  update_at   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+}
+
+model Categories {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  created_at  DateTime @default(now())
+  update_at   DateTime @updatedAt
+  isActive    Boolean  @default(true)
+}
+
+model Authors {
+  id   Int    @id @default(autoincrement())
+  name String
+  bio  String
+}
+
+model Images {
+  id         Int      @id @default(autoincrement())
+  fileUrl    String
+  created_at DateTime @default(now())
+  title      String?
+  isSlider   Boolean  @default(false)
+}
