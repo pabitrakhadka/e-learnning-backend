@@ -19,6 +19,8 @@ import ApiError from './utils/ApiError.js';
 import newsRoute from './router/newsRoute.js';
 import categoryRoute from './router/categoryRoute.js';
 import imageRoute from './router/imageRoute.js';
+import ebook from './router/bookRoute.js';
+import notice from './router/noticeRouter.js';
 
 // Load environment variables
 dotenv.config({ path: "../.env" });
@@ -56,11 +58,11 @@ app.use('/public', express.static(staticPath));
 
 // app.use('/public', cors(), express.static(path.join(__dirname, "../public")));
 
-console.log("PUblic image directories=", path.join(__dirname, "../public"));
+console.log("PUblic image directories=", path.join(__dirname, "../public/upload"));
 
 
 // CORS configuration for static files
-app.use('/public', cors(corsOptions), express.static(path.join(__dirname, "../public")));
+app.use('/public', cors(corsOptions), express.static(path.join(__dirname, "../public/upload")));
 
 // Middleware
 app.use(bodyParser.json()); // Parse incoming JSON requests
@@ -86,6 +88,8 @@ app.use("/api/v1/superadmin", superAdminRoute); // Super admin routes
 app.use("/api/v1/category", categoryRoute)
 app.use("/api/v1/news", newsRoute)
 app.use("/api/v1/image", imageRoute)
+app.use("/api/v1/notice", notice);
+app.use("/api/v1/ebook", ebook);
 
 
 // Default route

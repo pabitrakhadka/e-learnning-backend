@@ -47,9 +47,8 @@ model System_Setting {
   id          Int      @id @default(autoincrement())
   key         String
   value       String
-  description String
+  description String?
   update_at   DateTime @updatedAt
-  isActive    Boolean  @default(true)
 }
 
 model Login_Attempt {
@@ -120,4 +119,23 @@ model Images {
   created_at DateTime @default(now())
   title      String?
   isSlider   Boolean  @default(false)
+}
+
+model EBook {
+  id          Int      @id @default(autoincrement()) // Auto-incrementing unique ID
+  title       String // Title of the e-book
+  author      String // Author of the e-book
+  description String // Description of the e-book
+  fileUrl     String // URL or path to the e-book file
+  createdAt   DateTime @default(now()) // Creation timestamp
+  updatedAt   DateTime @updatedAt // Auto-updated timestamp for modifications
+}
+
+model Notice {
+  id        Int      @id @default(autoincrement()) // Auto-incrementing unique ID
+  title     String // Title of the notice
+  fileUrl   String // URL or path to the e-book file
+  content   String   @db.Text // Content or description of the notice
+  createdAt DateTime @default(now()) // Creation timestamp
+  updatedAt DateTime @updatedAt // Auto-updated timestamp for modifications
 }

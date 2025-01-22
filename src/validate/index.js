@@ -204,5 +204,97 @@ const categorySchema = Joi.object({
         }),
 });
 
+const ebookSchema = Joi.object({
+    title: Joi.string()
+        .min(3)
+        .max(255)
+        .required()
+        .messages({
+            'string.base': 'Title must be a string.',
+            'string.empty': 'Title cannot be empty.',
+            'string.min': 'Title should be at least 3 characters long.',
+            'string.max': 'Title should be less than 255 characters long.',
+            'any.required': 'Title is required.',
+        }),
+    author: Joi.string()
+        .min(3)
+        .max(255)
+        .required()
+        .messages({
+            'string.base': 'Author must be a string.',
+            'string.empty': 'Author cannot be empty.',
+            'string.min': 'Author name should be at least 3 characters long.',
+            'string.max': 'Author name should be less than 255 characters long.',
+            'any.required': 'Author is required.',
+        }),
+    description: Joi.string()
+        .min(10)
+        .max(1000)
+        .required()
+        .messages({
+            'string.base': 'Description must be a string.',
+            'string.empty': 'Description cannot be empty.',
+            'string.min': 'Description should be at least 10 characters long.',
+            'string.max': 'Description should be less than 1000 characters long.',
+            'any.required': 'Description is required.',
+        }),
+
+});
+const noticeSchema = Joi.object({
+    title: Joi.string()
+        .min(3)
+        .max(255)
+        .required()
+        .messages({
+            'string.base': 'Title must be a string.',
+            'string.empty': 'Title cannot be empty.',
+            'string.min': 'Title should be at least 3 characters long.',
+            'string.max': 'Title should be less than 255 characters long.',
+            'any.required': 'Title is required.',
+        }),
+    content: Joi.string()
+        .min(10)
+        .max(1000)
+        .required()
+        .messages({
+            'string.base': 'Content must be a string.',
+            'string.empty': 'Content cannot be empty.',
+            'string.min': 'Content should be at least 10 characters long.',
+            'string.max': 'Content should be less than 1000 characters long.',
+            'any.required': 'Content is required.',
+        }),
+
+});
+
+const systemSettingSchemaJoi = Joi.object({
+    id: Joi.number()
+        .integer()
+        .positive()
+        .required()
+        .messages({
+            'number.base': 'ID must be a number',
+            'number.integer': 'ID must be an integer',
+            'number.positive': 'ID must be a positive number',
+            'any.required': 'ID is required',
+        }),
+    key: Joi.string()
+        .min(1)
+        .required()
+        .messages({
+            'string.base': 'Key must be a string',
+            'string.min': 'Key must not be empty',
+            'any.required': 'Key is required',
+        }),
+    value: Joi.string()
+        .min(1)
+        .required()
+        .messages({
+            'string.base': 'Value must be a string',
+            'string.min': 'Value must not be empty',
+            'any.required': 'Value is required',
+        }),
+    description: Joi.string().optional(),
+});
+
 //Export Schemas
-export { contactSchema, registerSchema, loginSchema, categorySchema, newsSchema };
+export { contactSchema, registerSchema, loginSchema, categorySchema, newsSchema, ebookSchema, noticeSchema };
